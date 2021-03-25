@@ -6,9 +6,10 @@ if [ -z "$RCLONE_REMOTE_MOUNT" ]; then
   echo "Error: RCLONE_REMOTE_MOUNT environment variable was not passed to the container."
   exit 1
 fi
-#RCLONE_MOUNT_OPTIONS="--read-only --buffer-size=1G --max-read-ahead=200M --dir-cache-time=48h --timeout=30s --contimeout=15s --retries=3 --low-level-retries=1 --stats=0"
-mount_command="rclone mount --config=/config/rclone.conf --allow-other --read-only --buffer-size=1G --max-read-ahead=200M --dir-cache-time=48h --timeout=30s --contimeout=15s --retries=3 --low-level-retries=1 --stats=0 $RCLONE_REMOTE_MOUNT /data"
 
-echo "Executing => $mount_command"
+RCLONE_MOUNT_OPTIONS="--read-only --buffer-size=1G --max-read-ahead=200M --dir-cache-time=48h --timeout=30s --contimeout=15s --retries=3 --low-level-retries=1 --stats=0"
+mount_command="rclone mount --config=/config/rclone.conf --allow-other $RCLONE_MOUNT_OPTIONS $RCLONE_REMOTE_MOUNT /data"
+
+echo "Executing Mount..."
 exec \
-	s6-setuidgid abc "$mount_command"
+	s6-setuidgid abc $mount_command
