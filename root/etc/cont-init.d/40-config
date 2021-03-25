@@ -1,9 +1,11 @@
 #!/usr/bin/with-contenv sh
 
 # create empty config file
-touch /config/.rclone.conf
+#touch /config/rclone.conf
+#mkdir /data
 
 # permissions
 chown -R abc:abc \
-	/config/.rclone.conf \
-	/root
+	/config/rclone.conf \
+	/root \
+	/data
